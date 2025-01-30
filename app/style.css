@@ -1,0 +1,65 @@
+.narudzba-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.narudzba-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.narudzba-details {
+    margin-bottom: 10px;
+}
+
+.narudzba-details p {
+    margin: 5px 0;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.status.na-cekanju {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.izvrseno {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.ponisteno {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.narudzba-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.narudzba-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.narudzba-actions button:first-child {
+    background: #28a745;
+    color: white;
+}
+
+.narudzba-actions button:last-child {
+    background: #dc3545;
+    color: white;
+} 

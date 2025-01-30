@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trgovina "Zadnji dani"</title>
+    <style>
+      body {
+        width: 100%;
+        max-width: 100vw;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f1f1f1;
+        overflow-x: hidden;
+      }
+
+      header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #4caf50;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin: 0;
+        flex-grow: 1;
+        font-size: 24px;
+        padding: 0 15px;
+      }
+
+      .login-button {
+        width: min-content;
+        background-color: #fff;
+        color: #4caf50;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        margin: 0 15px;
+      }
+
+      .login-button:hover {
+        background-color: #e0e0e0;
+      }
+
+      .content-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        width: 1300px;
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 10px;
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      .left-panel {
+        height: fit-content;
+        font-size: 0.9em;
+        margin-left: 15px;
+        width: 230px;
+      }
+
+      .left-panel h3 {
+        color: #4caf50;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.2em;
+        padding-left: 12px;
+      }
+
+      .left-panel ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .left-panel li {
+        padding: 8px 12px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .left-panel li.kategorija {
+        margin-left: 20px;
+        font-size: 0.95em;
+      }
+
+      .left-panel li:hover {
+        background-color: #e8f5e9;
+        color: #4caf50;
+      }
+
+      .center-panel {
+        width: 980px;
+      }
+
+      .center-panel h3 {
+        color: #4caf50;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+      }
+
+      .sort-container {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .sort-container label {
+        color: #666;
+        font-weight: normal;
+        margin-bottom: 0;
+      }
+
+      .sort-container select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: white;
+        width: auto;
+        margin-bottom: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        width: 100%;
+      }
+
+      .product-box {
+        width: 100%;
+        background-color: #fff;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        box-sizing: border-box;
+      }
+
+      .product-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .product-box img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .product-box h4 {
+        margin: 0;
+        color: #333;
+        font-size: 1.1em;
+      }
+
+      .product-box p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      .product-box .price {
+        font-weight: bold;
+        color: #4caf50;
+        font-size: 1.2em;
+      }
+
+      .clickable {
+        cursor: pointer;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .clickable:hover {
+        color: #4caf50;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+
+      .data-fetch-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      .data-fetch-button:hover {
+        background-color: #45a049;
+      }
+
+      .form-container {
+        display: none;
+        width: 100%;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+        margin: 0 auto;
+      }
+
+      .form-container.active {
+        display: block;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+      }
+      
+
+      input,
+      select,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 10px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1000;
+        max-height: 80%;
+        overflow-y: auto;
+        width: 90%;
+        max-width: 600px;
+      }
+
+      .table-container {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 20px;
+        overflow-x: auto;
+        border-radius: 10px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .close-popup {
+        background-color: #f44336;
+        color: white;
+        border-radius: 10px;
+      }
+
+      .stavka {
+        margin-bottom: 15px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .stavka input {
+        width: calc(50% - 5px);
+      }
+
+      @media (min-width: 768px) {
+        .stavka input {
+          width: calc(45% - 5px);
+        }
+      }
+
+      .form-container input[type="text"] {
+        width: 100%;
+      }
+
+      .receipt-table, .total-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      .receipt-table th, .receipt-table td, .total-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .receipt-table th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .receipt-table td {
+        background-color: white;
+        color: black;
+      }
+
+      .receipt-table tr:nth-child(even) td {
+        background-color: #f9f9f9;
+      }
+
+      .receipt-table tr:hover td {
+        background-color: #ddd;
+      }
+
+      .total-table td {
+        border: none;
+        font-weight: bold;
+        background-color: white;
+        color: black;
+      }
+
+      .data-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .data-box {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        width: calc(50% - 10px);
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 80%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .close-popup {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+
+      .close-popup:hover {
+        background-color: #d32f2f;
+      }
+
+      .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      .receipt-table th,
+      .receipt-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .receipt-table th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .receipt-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .receipt-table tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      .total-row {
+        font-size: 1.1em;
+        padding: 10px;
+        border-top: 2px solid #4caf50;
+      }
+
+      .stavka {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .stavka input {
+        flex: 1;
+      }
+
+      .nabava-ispis-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+      }
+
+      .nabava-ispis-row label {
+        margin-right: 10px;
+        min-width: 150px;
+      }
+
+      .nabava-ispis-row input {
+        width: 100px;
+        margin-right: 10px;
+      }
+
+      .nabava-ispis-info {
+        margin-left: 10px;
+        color: #666;
+      }
+
+      /* Update CSS for the floating cart button */
+      .floating-cart-button {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4caf50;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1000;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        transition: all 0.3s ease;
+      }
+
+      .floating-cart-button:hover {
+        background-color: #45a049;
+        transform: translateX(-50%) scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        background-color: white;
+        color: #4caf50;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: bold;
+        min-width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5px solid #4caf50;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Update the floating cart button to only show icon -->
+    <button class="floating-cart-button">
+      🛒<span class="cart-count">0</span>
+    </button>
+
+    <!-- Add this new cart popup div -->
+    <div id="cart-popup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <h2>Košarica</h2>
+        <div id="cart-items"></div>
+        <button class="close-popup" id="close-cart-popup">Zatvori</button>
+      </div>
+    </div>
+
+    <div id="overlay" class="overlay" style="display: none;"></div>
+    <header>
+      <h1>Trgovina "DANI NAKON"</h1>
+      <button class="login-button" id="login-button" onclick="showLogin()">Login</button>
+    </header>
+    <div id="kupac-view" class="view"> 
+      <div class="content-container">
+        <div class="left-panel">
+          <h3>Odjeli i Kategorije</h3>
+          <ul id="odjeli-kategorije-list">
+            <!-- Odjeli and Kategorije will be dynamically populated here -->
+          </ul>
+        </div>
+        <div class="center-panel">
+          <h3>Proizvodi</h3>
+          <div class="sort-container">
+            <label for="sort-by">Sort By:</label>
+            <select id="sort-by">
+              <option value="asc">Price: Low to High</option>
+              <option value="desc">Price: High to Low</option>
+            </select>
+          </div>
+          <div id="proizvodi-grid" class="grid-container">
+            <!-- Proizvodi will be dynamically populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div id="login-view" class="view" style="display: none;">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="user-id">User ID:</label>
+        <input type="text" id="user-id" required />
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" required />
+        
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <div id="admin-view" class="view" style="display: none;">
+      <h2 style="text-align: center;">Admin</h2>
+      <div id="restricted-view" class="view" style="display: none;">
+        <div class="button-container">
+          <button class="data-fetch-button" id="klub">Klub</button>
+          <button class="data-fetch-button" id="kupaci">Kupci</button>
+          <button class="data-fetch-button" id="zaposlenici">Zaposlenici</button>
+          <button class="data-fetch-button" id="lokacija">Lokacije</button>
+          <button class="data-fetch-button" id="pregled_proizvoda">Proizvodi</button>
+          <button class="data-fetch-button" id="pregled_predracuna">Predračuni</button>
+          <button class="data-fetch-button" id="pregled_racuna">Računi</button>
+          <button class="data-fetch-button" id="pregled_narudzba">Narudžbe</button>
+          <button class="data-fetch-button" id="pregled_nabava">Nabava</button>
+          <button class="data-fetch-button" id="evidencija">Evidencija</button>
+        </div>
+
+        <div class="form-container" id="dodaj-proizvod-container" style="margin-bottom: 20px; display: none;">
+          <h2>Dodaj Proizvod</h2>
+          <form  id="dodaj-proizvod-form">
+            <label for="naziv">Naziv:</label>
+            <input type="text" id="naziv" required />
+    
+            <label for="nabavna-cijena">Nabavna Cijena:</label>
+            <input type="number" id="nabavna-cijena" required min="0" step="0.01" />
+    
+            <label for="prodajna-cijena">Prodajna Cijena:</label>
+            <input type="number" id="prodajna-cijena" required min="0" step="0.01" />
+    
+            <label for="kategorija-id">Kategorija ID:</label>
+            <input type="number" id="kategorija-id" required min="1" />
+    
+            <button type="submit">Dodaj Proizvod</button>
+          </form>
+        </div>
+
+        <div class="form-container" id="dodaj-kupca-container" style="display: none;">
+          <h2>Dodaj Kupca</h2>
+          <form id="dodaj-kupca-form">
+            <label for="ime">Ime:</label>
+            <input type="text" id="ime" required />
+    
+            <label for="prezime">Prezime:</label>
+            <input type="text" id="prezime" required />
+    
+            <label for="spol">Spol:</label>
+            <select id="spol" required>
+              <option value="M">M</option>
+              <option value="Ž">Ž</option>
+            </select>
+    
+            <label for="adresa">Adresa:</label>
+            <input type="text" id="adresa" required />
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" required />
+    
+            <label for="tip">Tip:</label>
+            <select id="tip" required>
+              <option value="privatni">privatni</option>
+              <option value="poslovni">poslovni</option>
+            </select>
+            
+            <div id="oib-container" style="margin-bottom: 20px; display: none;">
+              <label for="oib-firme">OIB:</label>
+              <input type="text" id="oib-firme" />
+            </div>
+    
+            <button type="submit">Dodaj Kupca</button>
+          </form>
+        </div>
+
+        <div class="form-container" id="dodaj-zaposlenika-container" style="margin-bottom: 20px; display: none;">
+            <h2>Dodaj Zaposlenika</h2>
+            <form id="dodaj-zaposlenika-form">
+                <label for="ime-zaposlenika">Ime:</label>
+                <input type="text" id="ime-zaposlenika" required />
+
+                <label for="prezime-zaposlenika">Prezime:</label>
+                <input type="text" id="prezime-zaposlenika" required />
+
+                <label for="mjesto_rada">ID mjesta rada:</label>
+                <input type="text" id="mjesto_rada" required />
+
+                <label for="placa">Placa:</label>
+                <input type="number" id="placa" required />
+
+                <label for="spol">Spol:</label>
+                <select id="spol" required>
+                    <option value="M">M</option>
+                    <option value="Ž">Ž</option>
+                </select>
+
+                <button type="submit">Dodaj Zaposlenika</button>
+            </form>
+        </div>
+
+        
+        <!-- Add the views for Najprodavaniji Proizvodi and Najbolja Zarada -->
+        <div class="tables-container" style="display: none; margin-bottom: 30px;">
+          <div id="najprodavaniji-proizvodi-container" class="data-box">
+            <h3>Najprodavaniji Proizvodi</h3>
+            <!-- Data will be populated here -->
+          </div>
+          <div id="najbolja-zarada-container" class="data-box">
+            <h3>Najbolja Zarada</h3>
+            <!-- Data will be populated here -->
+          </div>
+        </div>
+
+        <div class="sort-container">  
+          <select id="location-select" style="display: none;">
+            <option value="svi">Svi proizvodi</option>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+
+        <div class="data-container">
+          <div id="najcesci-kupci-container" class="data-box" style="display: none;">
+            <h3>Najčešći Kupci</h3>
+            <!-- Data will be populated here -->
+          </div>
+          <div id="najbolji-kupci-container" class="data-box" style="display: none;">
+            <h3>Najbolji Kupci</h3>
+            <!-- Data will be populated here -->
+          </div>
+          <div id="najbolji-zaposlenik-racuni-container" class="data-box" style="display: none;">
+            <h3>Najbolji Zaposlenik - Broj Računa</h3>
+            <!-- Data will be populated here -->
+          </div>
+          <div id="najbolji-zaposlenik-zarada-container" class="data-box" style="display: none;">
+            <h3>Najbolji Zaposlenik - Ukupan Iznos</h3>
+            <!-- Data will be populated here -->
+          </div>
+        </div>
+
+        <div class="form-container" id="novi-racun-container">
+          <h2>Kreiraj Novi Račun</h2>
+          <form id="novi-racun-form">
+            <label for="kupac-id">Kupac ID:</label>
+            <input type="text" id="kupac-id" />
+    
+            <label for="zaposlenik-id">Zaposlenik ID:</label>
+            <input type="number" id="zaposlenik-id" required min="1" />
+    
+            <label for="nacin-placanja">Način Plaćanja:</label>
+            <select id="nacin-placanja" required>
+              <option value="Gotovina">Gotovina</option>
+              <option value="POS">POS</option>
+            </select>
+    
+            <button type="submit">Kreiraj Račun</button>
+          </form>
+        </div>
+  
+        <div id="proizvodi-na-lokacijama-container" style="display: none;">
+          <h3>Proizvodi na Lokacijama</h3>
+          <div id="proizvodi-table-container"></div>
+        </div>
+        <div id="table-container" class="table-container"></div>
+  
+        
+  
+        <div style="height: 50px;"></div>
+  
+        <div id="popup">
+          <h2>Dodaj Stavke</h2>
+          <form id="dodaj-stavke-form">
+            <div id="stavke-container">
+              <div class="stavka">
+                <label>Proizvod ID:</label>
+                <input type="number" class="proizvod-id" required min="1" />
+                <label>Količina:</label>
+                <input type="number" class="kolicina" required min="1" />
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+              <button type="button" id="add-stavka">Dodaj Još</button>
+              <button type="submit">Pošalji Stavke</button>
+            </div>
+          </form> 
+        </div> 
+  
+        
+  
+        
+
+        <!-- Add the views for Narudžbe and Nabava -->
+        <div class="tables-container" style="display: none; margin-bottom: 30px;">
+            <div id="narudzbe-container" class="data-box">
+                <h3>Narudžbe</h3>
+                <!-- Data will be populated here -->
+            </div>
+            <div id="nabava-container" class="data-box">
+                <h3>Nabava</h3>
+                <!-- Data will be populated here -->
+            </div>
+        </div>
+ 
+
+        <!-- Button to add Nabavu -->
+        <button id="dodaj-nabavu-button" style="display: none;">Dodaj Nabavu</button>
+
+        <!-- Form for adding Nabava -->
+        <div class="form-container" id="dodaj-nabavu-container" style="display: none;">
+            <h2>Nova Nabava</h2>
+            <form id="dodaj-nabavu-form">
+                <label for="lokacija-id-nabava">Lokacija ID:</label>
+                <input type="number" id="lokacija-id-nabava" required min="1" />
+                <button type="submit">Kreiraj Nabavu</button>
+            </form>
+        </div>
+
+        <div class="form-container" id="nabava-ispis-container" style="display: none;">
+            <h2>Proizvodi za Nabavu</h2>
+            <div id="nabava-ispis-table"></div>
+            <form id="nabava-stavke-form">
+                <button type="submit">Spremi Stavke</button>
+            </form>
+        </div>
+
+        <div class="form-container" id="novi-predracun-container">
+          <h2>Kreiraj Novi Predračun</h2>
+          <form id="novi-predracun-form">
+            <label for="kupac-id-predracun">Kupac ID:</label>
+            <input type="text" id="kupac-id-predracun" />
+
+            <label for="zaposlenik-id-predracun">Zaposlenik ID:</label>
+            <input type="number" id="zaposlenik-id-predracun" required min="1" />
+
+            <button type="submit">Kreiraj Predračun</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="stavke-popup" class="popup">
+        <div class="popup-content">
+            <h2>Stavke</h2>
+            <div id="stavke-table-container"></div> 
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
