@@ -246,7 +246,6 @@
         margin-bottom: 5px;
         display: block;
       }
-      
 
       input,
       select,
@@ -347,13 +346,16 @@
         width: 100%;
       }
 
-      .receipt-table, .total-table {
+      .receipt-table,
+      .total-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
       }
 
-      .receipt-table th, .receipt-table td, .total-table td {
+      .receipt-table th,
+      .receipt-table td,
+      .total-table td {
         border: 1px solid #ddd;
         padding: 8px;
         text-align: left;
@@ -567,7 +569,7 @@
     </button>
 
     <!-- Add this new cart popup div -->
-    <div id="cart-popup" class="popup" style="display: none;">
+    <div id="cart-popup" class="popup" style="display: none">
       <div class="popup-content">
         <h2>Košarica</h2>
         <div id="cart-items"></div>
@@ -575,12 +577,14 @@
       </div>
     </div>
 
-    <div id="overlay" class="overlay" style="display: none;"></div>
+    <div id="overlay" class="overlay" style="display: none"></div>
     <header>
       <h1>Trgovina "DANI NAKON"</h1>
-      <button class="login-button" id="login-button" onclick="showLogin()">Login</button>
+      <button class="login-button" id="login-button" onclick="showLogin()">
+        Login
+      </button>
     </header>
-    <div id="kupac-view" class="view"> 
+    <div id="kupac-view" class="view">
       <div class="content-container">
         <div class="left-panel">
           <h3>Odjeli i Kategorije</h3>
@@ -604,120 +608,172 @@
       </div>
     </div>
 
-    
-
-    <div id="login-view" class="view" style="display: none;">
+    <div id="login-view" class="view" style="display: none">
       <h2>Login</h2>
       <form id="login-form">
         <label for="user-id">User ID:</label>
         <input type="text" id="user-id" required />
-        
+
         <label for="password">Password:</label>
         <input type="password" id="password" required />
-        
+
         <button type="submit">Login</button>
       </form>
     </div>
 
-    <div id="admin-view" class="view" style="display: none;">
-      <h2 style="text-align: center;">Admin</h2>
-      <div id="restricted-view" class="view" style="display: none;">
+    <div id="admin-view" class="view" style="display: none">
+      <h2 style="text-align: center">Admin</h2>
+      <div id="restricted-view" class="view" style="display: none">
         <div class="button-container">
           <button class="data-fetch-button" id="klub">Klub</button>
           <button class="data-fetch-button" id="kupaci">Kupci</button>
-          <button class="data-fetch-button" id="zaposlenici">Zaposlenici</button>
+          <button class="data-fetch-button" id="zaposlenici">
+            Zaposlenici
+          </button>
           <button class="data-fetch-button" id="lokacija">Lokacije</button>
-          <button class="data-fetch-button" id="pregled_proizvoda">Proizvodi</button>
-          <button class="data-fetch-button" id="pregled_predracuna">Predračuni</button>
+          <button class="data-fetch-button" id="pregled_proizvoda">
+            Proizvodi
+          </button>
+          <button class="data-fetch-button" id="pregled_predracuna">
+            Predračuni
+          </button>
           <button class="data-fetch-button" id="pregled_racuna">Računi</button>
-          <button class="data-fetch-button" id="pregled_narudzba">Narudžbe</button>
+          <button class="data-fetch-button" id="pregled_narudzba">
+            Narudžbe
+          </button>
           <button class="data-fetch-button" id="pregled_nabava">Nabava</button>
           <button class="data-fetch-button" id="evidencija">Evidencija</button>
         </div>
+        <!-- Button to add Nabavu -->
+        <button id="dodaj-nabavu-button" style="display: none">
+          Dodaj Nabavu
+        </button>
+        <div class="form-container" id="novi-predracun-container">
+          <h2>Kreiraj Novi Predračun</h2>
+          <form id="novi-predracun-form">
+            <label for="kupac-id-predracun">Kupac ID:</label>
+            <input type="text" id="kupac-id-predracun" />
 
-        <div class="form-container" id="dodaj-proizvod-container" style="margin-bottom: 20px; display: none;">
+            <label for="zaposlenik-id-predracun">Zaposlenik ID:</label>
+            <input
+              type="number"
+              id="zaposlenik-id-predracun"
+              required
+              min="1"
+            />
+
+            <button type="submit">Kreiraj Predračun</button>
+          </form>
+        </div>
+        <div
+          class="form-container"
+          id="dodaj-proizvod-container"
+          style="margin-bottom: 20px; display: none"
+        >
           <h2>Dodaj Proizvod</h2>
-          <form  id="dodaj-proizvod-form">
+          <form id="dodaj-proizvod-form">
             <label for="naziv">Naziv:</label>
             <input type="text" id="naziv" required />
-    
+
             <label for="nabavna-cijena">Nabavna Cijena:</label>
-            <input type="number" id="nabavna-cijena" required min="0" step="0.01" />
-    
+            <input
+              type="number"
+              id="nabavna-cijena"
+              required
+              min="0"
+              step="0.01"
+            />
+
             <label for="prodajna-cijena">Prodajna Cijena:</label>
-            <input type="number" id="prodajna-cijena" required min="0" step="0.01" />
-    
+            <input
+              type="number"
+              id="prodajna-cijena"
+              required
+              min="0"
+              step="0.01"
+            />
+
             <label for="kategorija-id">Kategorija ID:</label>
             <input type="number" id="kategorija-id" required min="1" />
-    
+
             <button type="submit">Dodaj Proizvod</button>
           </form>
         </div>
 
-        <div class="form-container" id="dodaj-kupca-container" style="display: none;">
+        <div
+          class="form-container"
+          id="dodaj-kupca-container"
+          style="display: none"
+        >
           <h2>Dodaj Kupca</h2>
           <form id="dodaj-kupca-form">
             <label for="ime">Ime:</label>
             <input type="text" id="ime" required />
-    
+
             <label for="prezime">Prezime:</label>
             <input type="text" id="prezime" required />
-    
+
             <label for="spol">Spol:</label>
             <select id="spol" required>
               <option value="M">M</option>
               <option value="Ž">Ž</option>
             </select>
-    
+
             <label for="adresa">Adresa:</label>
             <input type="text" id="adresa" required />
-    
+
             <label for="email">Email:</label>
             <input type="email" id="email" required />
-    
+
             <label for="tip">Tip:</label>
             <select id="tip" required>
               <option value="privatni">privatni</option>
               <option value="poslovni">poslovni</option>
             </select>
-            
-            <div id="oib-container" style="margin-bottom: 20px; display: none;">
+
+            <div id="oib-container" style="margin-bottom: 20px; display: none">
               <label for="oib-firme">OIB:</label>
               <input type="text" id="oib-firme" />
             </div>
-    
+
             <button type="submit">Dodaj Kupca</button>
           </form>
         </div>
 
-        <div class="form-container" id="dodaj-zaposlenika-container" style="margin-bottom: 20px; display: none;">
-            <h2>Dodaj Zaposlenika</h2>
-            <form id="dodaj-zaposlenika-form">
-                <label for="ime-zaposlenika">Ime:</label>
-                <input type="text" id="ime-zaposlenika" required />
+        <div
+          class="form-container"
+          id="dodaj-zaposlenika-container"
+          style="margin-bottom: 20px; display: none"
+        >
+          <h2>Dodaj Zaposlenika</h2>
+          <form id="dodaj-zaposlenika-form">
+            <label for="ime-zaposlenika">Ime:</label>
+            <input type="text" id="ime-zaposlenika" required />
 
-                <label for="prezime-zaposlenika">Prezime:</label>
-                <input type="text" id="prezime-zaposlenika" required />
+            <label for="prezime-zaposlenika">Prezime:</label>
+            <input type="text" id="prezime-zaposlenika" required />
 
-                <label for="mjesto_rada">ID mjesta rada:</label>
-                <input type="text" id="mjesto_rada" required />
+            <label for="mjesto_rada">ID mjesta rada:</label>
+            <input type="text" id="mjesto_rada" required />
 
-                <label for="placa">Placa:</label>
-                <input type="number" id="placa" required />
+            <label for="placa">Placa:</label>
+            <input type="number" id="placa" required />
 
-                <label for="spol">Spol:</label>
-                <select id="spol" required>
-                    <option value="M">M</option>
-                    <option value="Ž">Ž</option>
-                </select>
+            <label for="spol">Spol:</label>
+            <select id="spol" required>
+              <option value="M">M</option>
+              <option value="Ž">Ž</option>
+            </select>
 
-                <button type="submit">Dodaj Zaposlenika</button>
-            </form>
+            <button type="submit">Dodaj Zaposlenika</button>
+          </form>
         </div>
 
-        
         <!-- Add the views for Najprodavaniji Proizvodi and Najbolja Zarada -->
-        <div class="tables-container" style="display: none; margin-bottom: 30px;">
+        <div
+          class="tables-container"
+          style="display: none; margin-bottom: 30px"
+        >
           <div id="najprodavaniji-proizvodi-container" class="data-box">
             <h3>Najprodavaniji Proizvodi</h3>
             <!-- Data will be populated here -->
@@ -728,27 +784,43 @@
           </div>
         </div>
 
-        <div class="sort-container">  
-          <select id="location-select" style="display: none;">
+        <div class="sort-container">
+          <select id="location-select" style="display: none">
             <option value="svi">Svi proizvodi</option>
             <!-- Options will be populated dynamically -->
           </select>
         </div>
 
         <div class="data-container">
-          <div id="najcesci-kupci-container" class="data-box" style="display: none;">
+          <div
+            id="najcesci-kupci-container"
+            class="data-box"
+            style="display: none"
+          >
             <h3>Najčešći Kupci</h3>
             <!-- Data will be populated here -->
           </div>
-          <div id="najbolji-kupci-container" class="data-box" style="display: none;">
+          <div
+            id="najbolji-kupci-container"
+            class="data-box"
+            style="display: none"
+          >
             <h3>Najbolji Kupci</h3>
             <!-- Data will be populated here -->
           </div>
-          <div id="najbolji-zaposlenik-racuni-container" class="data-box" style="display: none;">
+          <div
+            id="najbolji-zaposlenik-racuni-container"
+            class="data-box"
+            style="display: none"
+          >
             <h3>Najbolji Zaposlenik - Broj Računa</h3>
             <!-- Data will be populated here -->
           </div>
-          <div id="najbolji-zaposlenik-zarada-container" class="data-box" style="display: none;">
+          <div
+            id="najbolji-zaposlenik-zarada-container"
+            class="data-box"
+            style="display: none"
+          >
             <h3>Najbolji Zaposlenik - Ukupan Iznos</h3>
             <!-- Data will be populated here -->
           </div>
@@ -759,30 +831,28 @@
           <form id="novi-racun-form">
             <label for="kupac-id">Kupac ID:</label>
             <input type="text" id="kupac-id" />
-    
+
             <label for="zaposlenik-id">Zaposlenik ID:</label>
             <input type="number" id="zaposlenik-id" required min="1" />
-    
+
             <label for="nacin-placanja">Način Plaćanja:</label>
             <select id="nacin-placanja" required>
               <option value="Gotovina">Gotovina</option>
               <option value="POS">POS</option>
             </select>
-    
+
             <button type="submit">Kreiraj Račun</button>
           </form>
         </div>
-  
-        <div id="proizvodi-na-lokacijama-container" style="display: none;">
+
+        <div id="proizvodi-na-lokacijama-container" style="display: none">
           <h3>Proizvodi na Lokacijama</h3>
           <div id="proizvodi-table-container"></div>
         </div>
         <div id="table-container" class="table-container"></div>
-  
-        
-  
-        <div style="height: 50px;"></div>
-  
+
+        <div style="height: 50px"></div>
+
         <div id="popup">
           <h2>Dodaj Stavke</h2>
           <form id="dodaj-stavke-form">
@@ -794,72 +864,68 @@
                 <input type="number" class="kolicina" required min="1" />
               </div>
             </div>
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <div
+              style="
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+              "
+            >
               <button type="button" id="add-stavka">Dodaj Još</button>
               <button type="submit">Pošalji Stavke</button>
             </div>
-          </form> 
-        </div> 
-  
-        
-  
-        
-
-        <!-- Add the views for Narudžbe and Nabava -->
-        <div class="tables-container" style="display: none; margin-bottom: 30px;">
-            <div id="narudzbe-container" class="data-box">
-                <h3>Narudžbe</h3>
-                <!-- Data will be populated here -->
-            </div>
-            <div id="nabava-container" class="data-box">
-                <h3>Nabava</h3>
-                <!-- Data will be populated here -->
-            </div>
-        </div>
- 
-
-        <!-- Button to add Nabavu -->
-        <button id="dodaj-nabavu-button" style="display: none;">Dodaj Nabavu</button>
-
-        <!-- Form for adding Nabava -->
-        <div class="form-container" id="dodaj-nabavu-container" style="display: none;">
-            <h2>Nova Nabava</h2>
-            <form id="dodaj-nabavu-form">
-                <label for="lokacija-id-nabava">Lokacija ID:</label>
-                <input type="number" id="lokacija-id-nabava" required min="1" />
-                <button type="submit">Kreiraj Nabavu</button>
-            </form>
-        </div>
-
-        <div class="form-container" id="nabava-ispis-container" style="display: none;">
-            <h2>Proizvodi za Nabavu</h2>
-            <div id="nabava-ispis-table"></div>
-            <form id="nabava-stavke-form">
-                <button type="submit">Spremi Stavke</button>
-            </form>
-        </div>
-
-        <div class="form-container" id="novi-predracun-container">
-          <h2>Kreiraj Novi Predračun</h2>
-          <form id="novi-predracun-form">
-            <label for="kupac-id-predracun">Kupac ID:</label>
-            <input type="text" id="kupac-id-predracun" />
-
-            <label for="zaposlenik-id-predracun">Zaposlenik ID:</label>
-            <input type="number" id="zaposlenik-id-predracun" required min="1" />
-
-            <button type="submit">Kreiraj Predračun</button>
           </form>
         </div>
 
+        <!-- Add the views for Narudžbe and Nabava -->
+        <div
+          class="tables-container"
+          style="display: none; margin-bottom: 30px"
+        >
+          <div id="narudzbe-container" class="data-box">
+            <h3>Narudžbe</h3>
+            <!-- Data will be populated here -->
+          </div>
+          <div id="nabava-container" class="data-box">
+            <h3>Nabava</h3>
+            <!-- Data will be populated here -->
+          </div>
+        </div>
+
+        <!-- Form for adding Nabava -->
+        <div
+          class="form-container"
+          id="dodaj-nabavu-container"
+          style="display: none"
+        >
+          <h2>Nova Nabava</h2>
+          <form id="dodaj-nabavu-form">
+            <label for="lokacija-id-nabava">Lokacija ID:</label>
+            <input type="number" id="lokacija-id-nabava" required min="1" />
+            <button type="submit">Kreiraj Nabavu</button>
+          </form>
+        </div>
+
+        <div
+          class="form-container"
+          id="nabava-ispis-container"
+          style="display: none"
+        >
+          <h2>Proizvodi za Nabavu</h2>
+          <div id="nabava-ispis-table"></div>
+          <form id="nabava-stavke-form">
+            <button type="submit">Spremi Stavke</button>
+          </form>
+        </div>
       </div>
     </div>
 
     <div id="stavke-popup" class="popup">
-        <div class="popup-content">
-            <h2>Stavke</h2>
-            <div id="stavke-table-container"></div> 
-        </div>
+      <div class="popup-content">
+        <h2>Stavke</h2>
+        <div id="stavke-table-container"></div>
+      </div>
     </div>
 
     <script src="script.js"></script>
